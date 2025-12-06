@@ -1,0 +1,26 @@
+FROM python
+
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install -y netcat-openbsd
+
+RUN pip install  --upgrade pip 
+
+WORKDIR /usr/src/app
+
+COPY ./requirements.txt .
+
+RUN pip install -r requirements.txt
+
+COPY ./scripts/django/django_entrypoint.sh ./entrypoint.sh
+
+RUN chmod +x entrypoint.sh
+
+ENV DJANGO_READ_DOT_ENV_FILE=True
+
+COPY . .
+
+EXPOSE 8000
+
+ENTRYPOINT [ "./entrypoint.sh" ]
+
+CMD ["gunicorn", "configs.wsgi:application", "--bind", "0.0.0.0:8000"]
