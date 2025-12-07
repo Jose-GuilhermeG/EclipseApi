@@ -42,7 +42,12 @@ urlpatterns = [
         'me/shopping-car/',
         views.UserShopingCarItensListView.as_view(),
         name="user-shopping-car"
-    )
+    ),
+    path(
+        'me/purchaseds/',
+        views.UserPurchasedList.as_view(),
+        name="user-Purchased"
+    ),
     
 ]
 

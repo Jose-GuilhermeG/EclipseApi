@@ -86,7 +86,7 @@ CACHES = {
         'OPTIONS' : {
             'CLIENT_CLASS' : 'django_redis.client.DefaultClient',
             'IGNORE_EXCEPTIONS': False,
-            #'PASSWORD' : env('REDIS_PASSWORD'),
+            'PASSWORD' : env('REDIS_PASSWORD'),
         },  
         'KEY_PREFIX': 'django_orm'
     },

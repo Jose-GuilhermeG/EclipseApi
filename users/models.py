@@ -141,6 +141,7 @@ class Purchased(
         max_digits=10,
         decimal_places=2,
         null=True,
+        editable=False
     )
     
     objects = PurchasedManager()

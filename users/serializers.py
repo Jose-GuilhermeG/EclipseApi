@@ -4,7 +4,9 @@ from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.utils.translation import gettext_lazy as _
 
-from users.models import ShoppingCar , ShoppingCarItem
+
+from users.enuns import PURCHASEDSTATUS
+from users.models import ShoppingCar , ShoppingCarItem , Purchased
 from product.serializers import ProductListSerializer
 
 USER = get_user_model()
@@ -107,3 +109,20 @@ class ShoppingCarItemsSerializer(
     class Meta:
         model = ShoppingCarItem
         fields = ['product' , 'quantity' , 'total']
+        
+class PurchasedListSerializer(
+    serializers.ModelSerializer
+):
+    product = ProductListSerializer()
+    status = serializers.CharField(source="get_status_display")
+    
+    class Meta:
+        model = Purchased
+        fields = ['product','quantity','total','status','submit_date','created_at']
+        
+class PurchasedCreateSerializer(
+    serializers.ModelSerializer
+):
+    class Meta:
+        model = Purchased
+        fields = ['product','quantity']

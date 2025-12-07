@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404
 from django.views.decorators.cache import cache_page
 
 
-from users.serializers import RegisterSerializer , UserSerializer , AuthenticationSerializer , SetPasswordSerializer , ShoppingCarItemCreateSerializer , ShoppingCarItemsSerializer
+from users import serializers
 from users import models
 
 
@@ -29,11 +29,11 @@ class UserViewSet(
     }       
 
     serializers_classes = {
-            'list' : UserSerializer,
-            'update' : UserSerializer,
-            'retrieve' : UserSerializer,
-            'partial_update' : UserSerializer,
-            'change_password' : SetPasswordSerializer
+            'list' : serializers.UserSerializer,
+            'update' : serializers.UserSerializer,
+            'retrieve' : serializers.UserSerializer,
+            'partial_update' : serializers.UserSerializer,
+            'change_password' : serializers.SetPasswordSerializer
     }
         
 
@@ -44,7 +44,7 @@ class RegisterView(
     generics.CreateAPIView
 ):
     queryset = USER.objects.all()
-    serializer_class = RegisterSerializer
+    serializer_class = serializers.RegisterSerializer
     
     def perform_create(self, serializer):
         self.object = serializer.save()
@@ -58,7 +58,7 @@ class ChangePasswordView(
     generics.UpdateAPIView
 ):
     queryset = USER.objects.all()
-    serializer_class = SetPasswordSerializer
+    serializer_class = serializers.SetPasswordSerializer
     permission_classes = [IsAuthenticated]
     
     def get_object(self):
@@ -77,9 +77,10 @@ class UserShopingCarItensListView(
 ):
     permission_class = [IsAuthenticated]
     
+    #temporario , criar mixin para reutilizar logica
     def get_serializer_class(self):
         serializer = None
-        serializer_class = {'GET' : ShoppingCarItemsSerializer , "POST" : ShoppingCarItemCreateSerializer }
+        serializer_class = {'GET' : serializers.ShoppingCarItemsSerializer , "POST" : serializers.ShoppingCarItemCreateSerializer }
         return serializer_class[self.request.method]
     
     def get_queryset(self):
@@ -88,4 +89,23 @@ class UserShopingCarItensListView(
     def perform_create(self, serializer):
         return serializer.save(
             shopping_car = self.request.user.shopping_car
+        )
+        
+class UserPurchasedList(
+    generics.ListCreateAPIView
+):
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        return models.Purchased.objects.filter(user = self.request.user)
+    
+    #temporario , criar mixin para reutilizar logica
+    def get_serializer_class(self):
+        serializer = None
+        serializer_class = {'GET' : serializers.PurchasedListSerializer , "POST" : serializers.PurchasedCreateSerializer }
+        return serializer_class[self.request.method]
+    
+    def perform_create(self, serializer):
+        return serializer.save(
+            user = self.request.user
         )

@@ -14,15 +14,17 @@ services:
     environment:
       MYSQL_DATABASE: eclipse
       MYSQL_USER: eclipse_user
-      MYSQL_ROOT_PASSWORD : ${MYSQL_ECLIPSE_PASSWORD}
+      MYSQL_ROOT_PASSWORD : ${DATABASE_PASSWORD}
       MYSQL_ALLOW_EMPTY_PASSWORD : 0
-      MYSQL_PASSWORD: ${MYSQL_ECLIPSE_PASSWORD}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
     ports:
       - "3306:3306"
     networks:
      - eclipse_net
     volumes:
       - database_data:/var/lib/mysql
+    env_file:
+      - ./.env
     
   api:
     build: 
@@ -65,3 +67,5 @@ services:
       - eclipse_net
     depends_on:
       - api
+    env_file:
+      - ./.env
