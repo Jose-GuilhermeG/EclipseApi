@@ -1,8 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth import get_user_model
+from django.conf import settings
 
-USER = get_user_model()
+USER = settings.AUTH_USER_MODEL
 
 # Create your models here.
 class IsActive(models.Model):

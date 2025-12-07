@@ -2,7 +2,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from django.contrib.auth import authenticate
+from django.utils.translation import gettext_lazy as _
 
 from users.models import ShoppingCar , ShoppingCarItem
 from product.serializers import ProductListSerializer
@@ -53,7 +53,7 @@ class UserSerializer(
 ):
     class Meta:
         model = USER
-        fields = ['username' , 'email' , 'first_name' , 'last_name']
+        fields = ['photo','username' , 'email' , 'first_name' , 'last_name']
 
 
 class AuthenticationSerializer(
@@ -62,7 +62,7 @@ class AuthenticationSerializer(
     email = serializers.EmailField(required=True)
     password = serializers.CharField(required=True, write_only=True)
     
-    username_field = "email"
+    
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
@@ -72,15 +72,22 @@ class AuthenticationSerializer(
     def validate(self, attrs):
         email = attrs.get("email")
         password = attrs.get("password")
-        user = authenticate(email=email, password=password)
+        user = USER.objects.filter(email = email).first()
         
         if not user:
-            raise serializers.ValidationError("Credenciais inválidas")
+            raise serializers.ValidationError(_("Credenciais inválidas"))
 
-        data = super().validate({
-            "username": user.username, 
-            "password": password,
-        })
+        is_password_correct = user.check_password(password)
+        
+        if not is_password_correct:
+            raise serializers.ValidationError(_("Senha invalida"))
+        
+        refresh = self.get_token(user)
+        
+        data = dict()
+        data["refresh"] = str(refresh)
+        data["access"] = str(refresh.access_token)
+        
         
         return data
     

@@ -52,10 +52,11 @@ class CategoryProductSerializer(serializers.ModelSerializer):
         
 class ProductEvaluation(serializers.HyperlinkedModelSerializer):
     user = serializers.CharField(read_only=True)
+    user_photo = serializers.ImageField(source='user.photo')
     url = serializers.CharField(source='get_absolute_url',read_only=True)
     class Meta:
         model = Evaluation
-        fields = ['url','user','rating','comment']
+        fields = ['url','user','user_photo','rating','comment']
         
         
 class DoubCreateSerializer(serializers.ModelSerializer):
@@ -65,12 +66,13 @@ class DoubCreateSerializer(serializers.ModelSerializer):
         
 class ProductDoubSerializer(serializers.ModelSerializer):
     user = serializers.CharField(read_only=True)
+    user_photo = serializers.ImageField(source='user.photo')
     url = serializers.CharField(source='get_absolute_url',read_only=True)
     created_at = serializers.DateTimeField(format='%d-%m-%Y' , read_only=True)
     
     class Meta:
         model = Doubt
-        fields = ['user','url','title','created_at']
+        fields = ['user','user_photo','url','title','created_at']
         
 class ProductDoubEditSerializer(serializers.ModelSerializer):
     class Meta:

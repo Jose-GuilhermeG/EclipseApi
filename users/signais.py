@@ -1,6 +1,6 @@
 from django.db.models import signals
 from django.dispatch import receiver
-from .models import ShoppingCar , ShoppingCarItem
+from .models import ShoppingCar , ShoppingCarItem , Purchased
 from django.contrib.auth import get_user_model
 from django.db.models.signals import post_save , pre_save
 

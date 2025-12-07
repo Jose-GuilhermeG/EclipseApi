@@ -3,6 +3,7 @@ from os.path import join
 from environ import Env
 from datetime import timedelta
 from core.constants import DEFAULT_PAGE_NUMBER_LIST
+from django.urls import reverse_lazy
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 if Env().bool('DJANGO_READ_DOT_ENV_FILE',default=False):
@@ -18,11 +19,12 @@ TRIDY_APPS = [
     'drf_spectacular',
     'drf_spectacular_sidecar',
     'corsheaders',
+    'oauth2_provider',
 ]
 PROJECT_APPS = [
+    'users',
     'product',
     'core',
-    'users',
 ]
 DJANGO_APPS = [  
     'django.contrib.admin',
@@ -84,7 +86,7 @@ CACHES = {
         'OPTIONS' : {
             'CLIENT_CLASS' : 'django_redis.client.DefaultClient',
             'IGNORE_EXCEPTIONS': False,
-            'PASSWORD' : env('REDIS_PASSWORD'),
+            #'PASSWORD' : env('REDIS_PASSWORD'),
         },  
         'KEY_PREFIX': 'django_orm'
     },
@@ -119,6 +121,7 @@ SPECTACULAR_SETTINGS = {
     'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
     'REDOC_DIST': 'SIDECAR',
     'AUTHENTICATION_CLASS' : [
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ],
@@ -135,8 +138,9 @@ SIMPLE_JWT = {
 }
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
         'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     
@@ -175,3 +179,5 @@ STATIC_ROOT = join(BASE_DIR , 'static')
 MEDIA_ROOT = join(BASE_DIR , 'media')
 MEDIA_URL = '/media/'
 
+AUTH_USER_MODEL = 'users.User'
+LOGIN_URL = reverse_lazy("auth:token_obtain_pair")

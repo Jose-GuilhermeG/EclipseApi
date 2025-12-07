@@ -4,11 +4,11 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from core.constants import MEDIUM_CHAR_SIZE , LARGE_CHAR_SIZE
 from django.core.validators import MinValueValidator , MaxValueValidator
-from django.contrib.auth import get_user_model
+from django.conf import settings
 from django.db.models import Avg
 from .objects import ProductManager , CategoryManager
 
-USER = get_user_model()
+USER = settings.AUTH_USER_MODEL
 
 # Create your models here.
 class Product(BaseModel):
