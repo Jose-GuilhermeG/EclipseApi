@@ -52,7 +52,7 @@ class CategoryProductSerializer(serializers.ModelSerializer):
         
 class ProductEvaluation(serializers.HyperlinkedModelSerializer):
     user = serializers.CharField(read_only=True)
-    user_photo = serializers.ImageField(source='user.photo')
+    user_photo = serializers.ImageField(source='user.photo',read_only = True)
     url = serializers.CharField(source='get_absolute_url',read_only=True)
     class Meta:
         model = Evaluation
@@ -66,7 +66,7 @@ class DoubCreateSerializer(serializers.ModelSerializer):
         
 class ProductDoubSerializer(serializers.ModelSerializer):
     user = serializers.CharField(read_only=True)
-    user_photo = serializers.ImageField(source='user.photo')
+    user_photo = serializers.ImageField(source='user.photo',read_only = True)
     url = serializers.CharField(source='get_absolute_url',read_only=True)
     created_at = serializers.DateTimeField(format='%d-%m-%Y' , read_only=True)
     

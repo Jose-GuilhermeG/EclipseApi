@@ -7,7 +7,7 @@ router  = SimpleRouter()
 
 router.register(
     prefix='product',
-    viewset=views.ProductView,
+    viewset=views.ProductViewSet,
     basename='product'
 )
 
@@ -19,7 +19,7 @@ router.register(
 
 router.register(
     prefix=r'product/(?P<slug>[-\w]+)/evaluations',
-    viewset=views.ProductEvaluationView,
+    viewset=views.ProductEvaluationViewSet,
     basename='evaluations'
 )
 
@@ -39,13 +39,8 @@ urlpatterns += [
     ),
     re_path(
         r'^product/(?P<slug>[-\w]+)/doubts/$',
-        views.ProducDoubtListView.as_view(),
+        views.ProducDoubtListCreateView.as_view(),
         name="product_doubt_list"
-    ),
-    re_path(
-        r'^product/(?P<slug>[-\w]+)/doubts/$',
-        views.ProductDoubtCreateView.as_view(),
-        name="product_doubt_create"
     ),
     re_path(
         r'^product/(?P<slug>[-\w]+)/doubt/(?P<id>[\w]+)/$',
