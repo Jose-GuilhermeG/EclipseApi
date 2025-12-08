@@ -8,6 +8,7 @@ from django.utils.text import slugify
 from core.constants import DEFAULT_PAGE_NUMBER_LIST
 from .mixins import ObjectsDeleteMixin , ClientLoggedMixin , ObjectDataMixin , ReqGetMixin
 from product.serializers import ProductCreateSerializer
+from rest_framework import status
 
 USER = get_user_model()
 def get_next_page(page) : return f"?limit={DEFAULT_PAGE_NUMBER_LIST}&limite={DEFAULT_PAGE_NUMBER_LIST}&offeset={DEFAULT_PAGE_NUMBER_LIST}&offset={DEFAULT_PAGE_NUMBER_LIST}&ofset={DEFAULT_PAGE_NUMBER_LIST}&page={page}"
