@@ -86,11 +86,13 @@ CACHES = {
         'OPTIONS' : {
             'CLIENT_CLASS' : 'django_redis.client.DefaultClient',
             'IGNORE_EXCEPTIONS': False,
-            #'PASSWORD' : env('REDIS_PASSWORD'),
         },  
         'KEY_PREFIX': 'django_orm'
     },
 }
+if env.bool('REDIS_USE_PASSWORD', default=False):
+    CACHES['default']['OPTIONS']['PASSWORD'] = env('REDIS_PASSWORD')
+    
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
