@@ -21,14 +21,14 @@ class UserViewSet(
     ModelViewSet,
 ):
     queryset = USER.objects.all()
-    permissions_classes = {
+    permissions_class_per_action = {
         'list' :  IsAdminUser,
         'update' : IsAuthenticated,
         'partial_update' : IsAuthenticated,
         'destroy' : IsAuthenticated
     }       
 
-    serializers_classes = {
+    serializers_classe_per_action = {
             'list' : serializers.UserSerializer,
             'update' : serializers.UserSerializer,
             'retrieve' : serializers.UserSerializer,

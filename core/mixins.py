@@ -28,10 +28,10 @@ class SetCache:
 
 class ViewSetAddPermissionsMixin:
     
-    permissions_classes = None
+    permissions_class_per_action : dict = None
     
     def get_permissions(self):
-        permissions_classes = self.permissions_classes
+        permissions_classes = self.permissions_class_per_action
         
         if not permissions_classes:
             return []
@@ -55,12 +55,12 @@ class ViewSetAddDefaultPermissionMixin(
         return permission
     
 class ViewSetGetSerializerClassMixin:   
-    serializers_classes = None
+    serializers_classe_per_action = None
     
     def get_serializers_classes_field(self):
-        if not self.serializers_classes:
-            raise Exception("You must set the 'serializers_classes' attribute or override the 'get_serializers_classes_field' method.")
-        return self.serializers_classes
+        if not self.serializers_classe_per_action:
+            raise Exception("You must set the 'serializers_classe_per_action' attribute or override the 'get_serializers_classes_field' method.")
+        return self.serializers_classe_per_action
 
     def get_serializer_class(self, *args, **kwargs):
         serializer_classes = self.get_serializers_classes_field()
