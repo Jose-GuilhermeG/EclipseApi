@@ -148,7 +148,7 @@ REST_FRAMEWORK = {
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
     
-    'DEFAULT_PAGINATION_CLASS': 'core.ConfigsClass.LimitOffsetPagination',
+    'DEFAULT_PAGINATION_CLASS': 'core.ConfigsClass.DefaultPagination',
     'PAGE_SIZE' : DEFAULT_PAGE_NUMBER_LIST,
     
     'DEFAULT_THROTTLE_CLASSES': [

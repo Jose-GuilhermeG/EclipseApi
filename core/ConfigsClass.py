@@ -1,6 +1,6 @@
-from rest_framework.pagination import LimitOffsetPagination as BaseLimitPagination
+from rest_framework.pagination import CursorPagination as BaseLimitPagination
 
-class LimitOffsetPagination(
+class DefaultPagination(
     BaseLimitPagination
 ):
-    max_limit = 100
+    ordering = ['-created_at']
