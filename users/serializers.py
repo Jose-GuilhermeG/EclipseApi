@@ -105,7 +105,19 @@ class ShoppingCarItemsSerializer(
     serializers.ModelSerializer
 ):  
     product = ProductListSerializer()
+    item_url = serializers.HyperlinkedIdentityField(
+        view_name = "auth:user-shopping-car-detail",
+        lookup_field = "pk"
+    )
     
+    class Meta:
+        model = ShoppingCarItem
+        fields = ['product' , 'quantity' , 'total' , 'item_url']
+        
+class ShoppingCarItemSerializer(
+    serializers.ModelSerializer
+):
+    product = ProductListSerializer()
     class Meta:
         model = ShoppingCarItem
         fields = ['product' , 'quantity' , 'total']
@@ -113,12 +125,16 @@ class ShoppingCarItemsSerializer(
 class PurchasedListSerializer(
     serializers.ModelSerializer
 ):
+    purchased_url = serializers.HyperlinkedIdentityField(
+        view_name = "auth:user-purchased-detail",
+        lookup_field = "id"
+    )
     product = ProductListSerializer()
     status = serializers.CharField(source="get_status_display")
     
     class Meta:
         model = Purchased
-        fields = ['product','quantity','total','status','submit_date','created_at']
+        fields = ['product','quantity','total','status','purchased_url']
         
 class PurchasedCreateSerializer(
     serializers.ModelSerializer
@@ -126,3 +142,17 @@ class PurchasedCreateSerializer(
     class Meta:
         model = Purchased
         fields = ['product','quantity']
+        
+class PurchasedDetailSerializer(
+    serializers.ModelSerializer
+):
+    product = ProductListSerializer()
+    status = serializers.CharField(source="get_status_display")
+    confirm_delivered = serializers.HyperlinkedIdentityField(
+        view_name = "auth:user-purchased-confirm-delivered",
+        lookup_field = 'id'
+    )
+    
+    class Meta:
+        model = Purchased
+        fields = ['product','quantity','total','status','created_at','submit_date','confirm_delivered']

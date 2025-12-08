@@ -1,5 +1,5 @@
 from django.urls import path , include
-from rest_framework.routers import DefaultRouter
+from rest_framework.routers import SimpleRouter
 from rest_framework_simplejwt import views as jwt_views
 
 from users import views
@@ -15,6 +15,20 @@ user_control = views.UserViewSet.as_view(
         'patch': 'partial_update',
         'delete': 'destroy',
     }
+)
+
+router = SimpleRouter()
+
+router.register(
+    'me/shopping-car',
+    views.UserShppingCarViewSet,
+    basename='user-shopping-car'
+)
+
+router.register(
+    'me/purchaseds',
+    views.UserPurchasedViewset,
+    basename="user-purchased"
 )
 
 urlpatterns = [
@@ -39,17 +53,14 @@ urlpatterns = [
         name='user-change-password'
     ),
     path(
-        'me/shopping-car/',
-        views.UserShopingCarItensListView.as_view(),
-        name="user-shopping-car"
-    ),
-    path(
-        'me/purchaseds/',
-        views.UserPurchasedList.as_view(),
-        name="user-Purchased"
+        'me/purchaseds/<id>/confirm-delivered/',
+        views.confirm_delivered,
+        name="user-purchased-confirm-delivered"
     ),
     
 ]
+
+urlpatterns += router.urls
 
 #auth urls
 urlpatterns += [

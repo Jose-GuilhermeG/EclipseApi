@@ -50,17 +50,17 @@ class ViewSetAddDefaultPermissionMixin(
     def get_permissions(self):
         permission = super().get_permissions()
         if not len(permission):
-            permission = self.default_permission
+            permission = [default_permission() for default_permission in self.default_permission]
             
         return permission
     
 class ViewSetGetSerializerClassMixin:   
-    serializers_classe_per_action = None
+    serializers_class_per_action = None
     
     def get_serializers_classes_field(self):
-        if not self.serializers_classe_per_action:
+        if not self.serializers_class_per_action:
             raise Exception("You must set the 'serializers_classe_per_action' attribute or override the 'get_serializers_classes_field' method.")
-        return self.serializers_classe_per_action
+        return self.serializers_class_per_action
 
     def get_serializer_class(self, *args, **kwargs):
         serializer_classes = self.get_serializers_classes_field()

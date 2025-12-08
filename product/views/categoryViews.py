@@ -32,7 +32,7 @@ class CategoryViewSet(
             'destroy' : IsAdminUser
     }
     
-    serializers_classe_per_action = {
+    serializers_class_per_action = {
         'list' : serializers.CategoryListSerializer,
         'create' :  serializers.CategoryListSerializer,
         'update' : serializers.CategoryListSerializer,

@@ -35,7 +35,7 @@ class ProductViewSet(
             'partial_update' : IsObjOwner,
             'destroy' : IsObjOwner
     }
-    serializers_classes = {
+    serializers_class_per_action = {
         'list' : serializers.ProductListSerializer,
         'create' :  serializers.ProductCreateSerializer,
         'update' : serializers.ProductCreateSerializer,
