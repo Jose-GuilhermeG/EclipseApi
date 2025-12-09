@@ -25,6 +25,7 @@ PROJECT_APPS = [
     'users',
     'product',
     'core',
+    'workplace',
 ]
 DJANGO_APPS = [  
     'django.contrib.admin',

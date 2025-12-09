@@ -84,7 +84,46 @@ class CategoryDetailViewTest(APITestCase):
 
         self.assertEqual(response.data["name"], self.category.name)
 
+class CategoryCreateViewTest(APITestCase):
+    
+    def setUp(self):
+        self.create_url = reverse("product:category-list")
+        self.adminData = {
+            "username":"adminTest", 
+            "password":"123456",
+            "email":"adminEmail@teste.com"
+        }
+    
+    def test_new_create_category(self):
+        admin = USER.objects.create_superuser(**self.adminData)
+        self.client.force_login(admin)
 
+        response = self.client.post(self.create_url, {"name": "New Category"})
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data["name"], "New Category")
+        self.assertIn("slug", response.data)
+        self.assertEqual(Category.objects.count(), 1)
+        
+class CategoryDeleteViewTest(APITestCase):
+    
+    def setUp(self):
+        self.category = Category.objects.create(name="New Category")
+        self.delete_url = reverse("product:category-detail",args=[self.category.slug])
+        self.adminData = {
+            "username":"adminTest", 
+            "password":"123456",
+            "email":"adminEmail@teste.com"
+        }
+    
+    def test_delete_category(self):
+        admin = USER.objects.create_superuser(**self.adminData)
+        self.client.force_login(admin)
+
+        response = self.client.delete(self.delete_url)
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(Category.objects.count(), 0)
 
 class CategoryPermissionsTest(APITestCase):
 

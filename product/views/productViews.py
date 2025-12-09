@@ -50,6 +50,7 @@ class ProductSearchView(
     generics.ListAPIView
 ):
     serializer_class = serializers.ProductListSerializer
+    filterset_class = ProductFilter
     
     def get_queryset(self):
         query = self.kwargs.get('query')
@@ -60,5 +61,5 @@ class ProductFeatureView(generics.RetrieveAPIView):
     serializer_class = serializers.ProductListSerializer
     
     def get_object(self):
-        return Product.objects.get(slug='airpods-max')
+        return Product.objects.first()
         
