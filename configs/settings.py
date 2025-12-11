@@ -72,7 +72,9 @@ DATABASES = {
         'PORT' : env("DATABASE_PORT"),
         'ATOMIC_REQUESTS' : True,
         'TEST' : {
-            'NAME' : "EclipseTest",
+            'NAME' : 'eclipse_test',
+            'CHARSET': 'utf8mb4',
+            'COLLATION': 'utf8mb4_unicode_ci',
         }
     }
 }

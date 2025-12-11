@@ -113,3 +113,6 @@ python ./fake_objects/<tipo_de_objeto>.py/
 ```
 o "tipo_de_objeto" pode-se ser <b>Products</b> ou <b>Users</b> , sendo que <b>Product</b> gera os produtos , duvidas e avaliações mas é necessario ter o admin no banco junto as migrações 
 e <b>Users</b> ainda não foi implementado
+
+## Como Contribuir:
+Ha um arquivo apenas para ajudar nisso: [Contribuir](./CONTRIBUTING.md)

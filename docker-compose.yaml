@@ -23,6 +23,7 @@ services:
      - eclipse_net
     volumes:
       - database_data:/var/lib/mysql
+      - ./compose/mysql/permissions/:/docker-entrypoint-initdb.d
     env_file:
       - ./.env
     

@@ -1,4 +1,4 @@
-name: api-CI
+name: CI
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  Tests:
 
     runs-on: ubuntu-latest
     
@@ -74,6 +74,12 @@ jobs:
           echo "Waiting for MySQL..."
           sleep 2
         done
+
+    - name: Grant mysql permissions
+      run: |
+         sudo apt-get install -y mysql-client
+         mysql -h 127.0.0.1 -u root -proot -e "GRANT ALL PRIVILEGES ON *.* TO 'django'@'%' WITH GRANT OPTION;"
+         mysql -h 127.0.0.1 -u root -proot -e "FLUSH PRIVILEGES;"
 
     - name: Apply migrations
       run: |
