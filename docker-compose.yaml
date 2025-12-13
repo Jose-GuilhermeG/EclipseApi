@@ -26,9 +26,9 @@ services:
       - ./compose/mysql/permissions/:/docker-entrypoint-initdb.d
     env_file:
       - ./.env
-    
+
   api:
-    build: 
+    build:
       context: .
       dockerfile: ./compose/django/dockerfile
     container_name: eclipse_api
@@ -57,8 +57,8 @@ services:
       - media_data:/mediafiles/
     depends_on:
       - api
-    
-  redis : 
+
+  redis :
     image: redis:latest
     container_name: eclipse_redis
     ports :

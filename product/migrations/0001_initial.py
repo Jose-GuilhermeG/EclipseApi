@@ -8,73 +8,187 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Category',
+            name="Category",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('is_active', models.BooleanField(default=True, verbose_name='Está Ativo?')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Criado em')),
-                ('updated_at', models.DateTimeField(auto_now=True, verbose_name='Atualizado em')),
-                ('name', models.CharField(max_length=90, unique=True, verbose_name='Nome da categoria')),
-                ('slug', models.SlugField(unique=True, verbose_name='Slug da categoria')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "is_active",
+                    models.BooleanField(default=True, verbose_name="Está Ativo?"),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(auto_now_add=True, verbose_name="Criado em"),
+                ),
+                (
+                    "updated_at",
+                    models.DateTimeField(auto_now=True, verbose_name="Atualizado em"),
+                ),
+                (
+                    "name",
+                    models.CharField(
+                        max_length=90, unique=True, verbose_name="Nome da categoria"
+                    ),
+                ),
+                (
+                    "slug",
+                    models.SlugField(unique=True, verbose_name="Slug da categoria"),
+                ),
             ],
             options={
-                'verbose_name': 'Categoria',
-                'verbose_name_plural': 'Categorias',
+                "verbose_name": "Categoria",
+                "verbose_name_plural": "Categorias",
             },
         ),
         migrations.CreateModel(
-            name='Doubt',
+            name="Doubt",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('is_active', models.BooleanField(default=True, verbose_name='Está Ativo?')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Criado em')),
-                ('updated_at', models.DateTimeField(auto_now=True, verbose_name='Atualizado em')),
-                ('title', models.CharField(max_length=120, verbose_name='Titulo da duvida')),
-                ('content', models.TextField(verbose_name='Conteudo da duvida')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "is_active",
+                    models.BooleanField(default=True, verbose_name="Está Ativo?"),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(auto_now_add=True, verbose_name="Criado em"),
+                ),
+                (
+                    "updated_at",
+                    models.DateTimeField(auto_now=True, verbose_name="Atualizado em"),
+                ),
+                (
+                    "title",
+                    models.CharField(max_length=120, verbose_name="Titulo da duvida"),
+                ),
+                ("content", models.TextField(verbose_name="Conteudo da duvida")),
             ],
             options={
-                'verbose_name': 'Duvida',
-                'verbose_name_plural': 'Duvidas',
+                "verbose_name": "Duvida",
+                "verbose_name_plural": "Duvidas",
             },
         ),
         migrations.CreateModel(
-            name='Evaluation',
+            name="Evaluation",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('is_active', models.BooleanField(default=True, verbose_name='Está Ativo?')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Criado em')),
-                ('updated_at', models.DateTimeField(auto_now=True, verbose_name='Atualizado em')),
-                ('rating', models.PositiveSmallIntegerField(validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(5)], verbose_name='Avaliação do produto')),
-                ('comment', models.TextField(blank=True, null=True, verbose_name='Comentário da avaliação')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "is_active",
+                    models.BooleanField(default=True, verbose_name="Está Ativo?"),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(auto_now_add=True, verbose_name="Criado em"),
+                ),
+                (
+                    "updated_at",
+                    models.DateTimeField(auto_now=True, verbose_name="Atualizado em"),
+                ),
+                (
+                    "rating",
+                    models.PositiveSmallIntegerField(
+                        validators=[
+                            django.core.validators.MinValueValidator(1),
+                            django.core.validators.MaxValueValidator(5),
+                        ],
+                        verbose_name="Avaliação do produto",
+                    ),
+                ),
+                (
+                    "comment",
+                    models.TextField(
+                        blank=True, null=True, verbose_name="Comentário da avaliação"
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Avaliação',
-                'verbose_name_plural': 'Avaliações',
-                'ordering': ['-created_at'],
+                "verbose_name": "Avaliação",
+                "verbose_name_plural": "Avaliações",
+                "ordering": ["-created_at"],
             },
         ),
         migrations.CreateModel(
-            name='Product',
+            name="Product",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('is_active', models.BooleanField(default=True, verbose_name='Está Ativo?')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Criado em')),
-                ('updated_at', models.DateTimeField(auto_now=True, verbose_name='Atualizado em')),
-                ('name', models.CharField(max_length=90, verbose_name='Nome do produto')),
-                ('slug', models.SlugField(unique=True, verbose_name='Slug do produto')),
-                ('price', models.DecimalField(decimal_places=2, max_digits=6, validators=[django.core.validators.MinValueValidator(0)], verbose_name='Preço do produto')),
-                ('description', models.TextField(blank=True, verbose_name='Descrição do produto')),
-                ('image', models.ImageField(blank=True, null=True, upload_to='products/images/%Y/%m/', verbose_name='Imagem do Produto')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "is_active",
+                    models.BooleanField(default=True, verbose_name="Está Ativo?"),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(auto_now_add=True, verbose_name="Criado em"),
+                ),
+                (
+                    "updated_at",
+                    models.DateTimeField(auto_now=True, verbose_name="Atualizado em"),
+                ),
+                (
+                    "name",
+                    models.CharField(max_length=90, verbose_name="Nome do produto"),
+                ),
+                ("slug", models.SlugField(unique=True, verbose_name="Slug do produto")),
+                (
+                    "price",
+                    models.DecimalField(
+                        decimal_places=2,
+                        max_digits=6,
+                        validators=[django.core.validators.MinValueValidator(0)],
+                        verbose_name="Preço do produto",
+                    ),
+                ),
+                (
+                    "description",
+                    models.TextField(blank=True, verbose_name="Descrição do produto"),
+                ),
+                (
+                    "image",
+                    models.ImageField(
+                        blank=True,
+                        null=True,
+                        upload_to="products/images/%Y/%m/",
+                        verbose_name="Imagem do Produto",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Produto',
-                'verbose_name_plural': 'Produtos',
-                'ordering': ['-price'],
+                "verbose_name": "Produto",
+                "verbose_name_plural": "Produtos",
+                "ordering": ["-price"],
             },
         ),
     ]

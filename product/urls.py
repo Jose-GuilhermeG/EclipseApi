@@ -1,44 +1,36 @@
-#Imports
-from django.urls import path , re_path
+# Imports
+from django.urls import re_path
 from rest_framework.routers import SimpleRouter
 from product import views
 
-router  = SimpleRouter()
+router = SimpleRouter()
+
+router.register(prefix="product", viewset=views.ProductViewSet, basename="product")
+
+router.register(prefix="category", viewset=views.CategoryViewSet, basename="category")
 
 router.register(
-    prefix='product',
-    viewset=views.ProductViewSet,
-    basename='product'
-)
-
-router.register(
-    prefix='category',
-    viewset=views.CategoryViewSet,
-    basename='category'
-)
-
-router.register(
-    prefix=r'product/(?P<slug>[-\w]+)/evaluations',
+    prefix=r"product/(?P<slug>[-\w]+)/evaluations",
     viewset=views.ProductEvaluationViewSet,
-    basename='evaluations'
+    basename="evaluations",
 )
 
-urlpatterns=router.urls
+urlpatterns = router.urls
 
 urlpatterns += [
     re_path(
-        r'^product/search/(?P<query>[- \w]+)/$',
+        r"^product/search/(?P<query>[- \w]+)/$",
         views.ProductSearchView.as_view(),
-        name='product_search'
+        name="product_search",
     ),
     re_path(
-        r'^product/(?P<slug>[-\w]+)/doubts/$',
+        r"^product/(?P<slug>[-\w]+)/doubts/$",
         views.ProducDoubtListCreateView.as_view(),
-        name="product_doubt_list"
+        name="product_doubt_list",
     ),
     re_path(
-        r'^product/(?P<slug>[-\w]+)/doubt/(?P<id>[\w]+)/$',
+        r"^product/(?P<slug>[-\w]+)/doubt/(?P<id>[\w]+)/$",
         views.ProductDoubtUpdateDeleteView.as_view(),
-        name="product_doubt_edit"
+        name="product_doubt_edit",
     ),
 ]

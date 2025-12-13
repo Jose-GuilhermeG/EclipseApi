@@ -1,12 +1,13 @@
-#imports
+# imports
 from django.db import models
 from django.db.models import Q
 from django.utils.text import slugify
 
+
 class ProductManager(models.Manager):
     def create(self, **kwargs):
         name = kwargs.get("name")
-    
+
         if name:
             base_slug = slugify(name)
             slug = base_slug
@@ -19,17 +20,16 @@ class ProductManager(models.Manager):
             kwargs["slug"] = slug
 
         return super().create(**kwargs)
-    
-    def search(self  , content):
+
+    def search(self, content):
         model = self.get_queryset()
-        return model.filter(Q(
-            name__icontains = content
-        ) | Q(
-            description__icontains = content
-        ))
-        
+        return model.filter(
+            Q(name__icontains=content) | Q(description__icontains=content)
+        )
+
+
 class CategoryManager(models.Manager):
     def create(self, **kwargs):
-        slug = slugify(kwargs.get('name'))
-        kwargs['slug'] = slug
+        slug = slugify(kwargs.get("name"))
+        kwargs["slug"] = slug
         return super().create(**kwargs)

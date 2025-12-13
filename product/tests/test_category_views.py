@@ -1,12 +1,14 @@
-#imports
-from rest_framework.test import APITestCase
+# imports
 from django.contrib.auth import get_user_model
-from product.models import Category
 from django.urls import reverse
-from core.constants import DEFAULT_PAGE_NUMBER_LIST
 from rest_framework import status
+from rest_framework.test import APITestCase
+
+from core.constants import DEFAULT_PAGE_NUMBER_LIST
+from product.models import Category
 
 USER = get_user_model()
+
 
 class CategoryListViewTest(APITestCase):
 
@@ -29,10 +31,10 @@ class CategoryListViewTest(APITestCase):
         self.assertIsNotNone(response.data.get("next"))
 
     def test_list_second_page(self):
-        response : dict = self.client.get(self.list_url)
-        next_page_url : str = response.data.get("next")
-        second_page_response : dict = self.client.get(next_page_url)
-        
+        response: dict = self.client.get(self.list_url)
+        next_page_url: str = response.data.get("next")
+        second_page_response: dict = self.client.get(next_page_url)
+
         self.assertEqual(second_page_response.status_code, status.HTTP_200_OK)
 
         self.assertEqual(len(second_page_response.data["results"]), 5)
@@ -61,7 +63,8 @@ class CategoryListViewTest(APITestCase):
     def test_list_is_public(self):
         response = self.client.get(self.list_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        
+
+
 class CategoryDetailViewTest(APITestCase):
 
     def setUp(self):
@@ -69,31 +72,29 @@ class CategoryDetailViewTest(APITestCase):
             name="Category Detail Test",
         )
 
-        self.detail_url = reverse(
-            "product:category-detail",
-            args=[self.category.slug]
-        )
+        self.detail_url = reverse("product:category-detail", args=[self.category.slug])
 
     def test_detail_returns_correct_fields(self):
         response = self.client.get(self.detail_url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-        expected_fields = {"name","product"}
+        expected_fields = {"name", "product"}
         self.assertEqual(set(response.data.keys()), expected_fields)
 
         self.assertEqual(response.data["name"], self.category.name)
 
+
 class CategoryCreateViewTest(APITestCase):
-    
+
     def setUp(self):
         self.create_url = reverse("product:category-list")
         self.adminData = {
-            "username":"adminTest", 
-            "password":"123456",
-            "email":"adminEmail@teste.com"
+            "username": "adminTest",
+            "password": "123456",
+            "email": "adminEmail@teste.com",
         }
-    
+
     def test_new_create_category(self):
         admin = USER.objects.create_superuser(**self.adminData)
         self.client.force_login(admin)
@@ -104,18 +105,19 @@ class CategoryCreateViewTest(APITestCase):
         self.assertEqual(response.data["name"], "New Category")
         self.assertIn("slug", response.data)
         self.assertEqual(Category.objects.count(), 1)
-        
+
+
 class CategoryDeleteViewTest(APITestCase):
-    
+
     def setUp(self):
         self.category = Category.objects.create(name="New Category")
-        self.delete_url = reverse("product:category-detail",args=[self.category.slug])
+        self.delete_url = reverse("product:category-detail", args=[self.category.slug])
         self.adminData = {
-            "username":"adminTest", 
-            "password":"123456",
-            "email":"adminEmail@teste.com"
+            "username": "adminTest",
+            "password": "123456",
+            "email": "adminEmail@teste.com",
         }
-    
+
     def test_delete_category(self):
         admin = USER.objects.create_superuser(**self.adminData)
         self.client.force_login(admin)
@@ -125,21 +127,22 @@ class CategoryDeleteViewTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Category.objects.count(), 0)
 
+
 class CategoryPermissionsTest(APITestCase):
 
     def setUp(self):
         self.userData = {
-            "username":"user", 
-            "password":"123456",
-            "email":"userEmail@teste.com"
+            "username": "user",
+            "password": "123456",
+            "email": "userEmail@teste.com",
         }
-        
+
         self.adminData = {
-            "username":"adminTest", 
-            "password":"123456",
-            "email":"adminEmail@teste.com"
+            "username": "adminTest",
+            "password": "123456",
+            "email": "adminEmail@teste.com",
         }
-        
+
         self.user = USER.objects.create_user(**self.userData)
 
         self.admin = USER.objects.create_superuser(**self.adminData)

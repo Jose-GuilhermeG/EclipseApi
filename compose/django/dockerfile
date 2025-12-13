@@ -3,7 +3,7 @@ FROM python
 RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y netcat-openbsd
 
-RUN pip install  --upgrade pip 
+RUN pip install  --upgrade pip
 
 WORKDIR /usr/src/app
 

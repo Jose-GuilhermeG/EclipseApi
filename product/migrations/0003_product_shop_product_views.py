@@ -7,19 +7,31 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('product', '0002_initial'),
-        ('workplace', '0001_initial'),
+        ("product", "0002_initial"),
+        ("workplace", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='product',
-            name='shop',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='products', to='workplace.shop', verbose_name='Loja'),
+            model_name="product",
+            name="shop",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="products",
+                to="workplace.shop",
+                verbose_name="Loja",
+            ),
         ),
         migrations.AddField(
-            model_name='product',
-            name='views',
-            field=models.IntegerField(blank=True, default=0, null=True, verbose_name='Visualizações do produto'),
+            model_name="product",
+            name="views",
+            field=models.IntegerField(
+                blank=True,
+                default=0,
+                null=True,
+                verbose_name="Visualizações do produto",
+            ),
         ),
     ]

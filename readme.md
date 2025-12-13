@@ -1,6 +1,6 @@
 # EclipseApi
 
-Um antigo projeto que decidi subir e finalizar , é 
+Um antigo projeto que decidi subir e finalizar , é
 uma simples api para um loja virtual Contendo:
 
 - sistema de autenticação jwt e oAuth
@@ -101,7 +101,7 @@ por padrão ja vem um user admin nas fixture basta dar um :
 ```bash
 python manage.py loaddata users.json
 ```
-entrar na url "/admin" e colocar o email : 
+entrar na url "/admin" e colocar o email :
 admin@exemple.com
 e a senha : admin
 
@@ -111,7 +111,7 @@ mas para criar objetos de forma automatizada ha um modulo chamada fake_objects, 
 ```bash
 python ./fake_objects/<tipo_de_objeto>.py/
 ```
-o "tipo_de_objeto" pode-se ser <b>Products</b> ou <b>Users</b> , sendo que <b>Product</b> gera os produtos , duvidas e avaliações mas é necessario ter o admin no banco junto as migrações 
+o "tipo_de_objeto" pode-se ser <b>Products</b> ou <b>Users</b> , sendo que <b>Product</b> gera os produtos , duvidas e avaliações mas é necessario ter o admin no banco junto as migrações
 e <b>Users</b> ainda não foi implementado
 
 ## Como Contribuir:

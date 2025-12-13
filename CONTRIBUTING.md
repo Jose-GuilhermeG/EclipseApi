@@ -1,6 +1,6 @@
 # Como Contribuir
 
-Obrigado por considerar contribuir para este projeto!  
+Obrigado por considerar contribuir para este projeto!
 Siga as orientações abaixo para garantir que o processo seja simples e organizado.
 
 ---

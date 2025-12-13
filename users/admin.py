@@ -4,11 +4,24 @@ from users import models
 from django.utils.translation import gettext_lazy as _
 from core.admin import BaseModelAdmin
 
+
 @admin.register(models.User)
 class UserAdmin(modelUserAdmin):
-    list_display = ['username' , 'email' , 'last_login']
+    list_display = ["username", "email", "last_login"]
     fieldsets = (
-        (_("Dados Pessoais"), {"fields": ("username", "password", "photo" , "first_name", "last_name", "email")}),
+        (
+            _("Dados Pessoais"),
+            {
+                "fields": (
+                    "username",
+                    "password",
+                    "photo",
+                    "first_name",
+                    "last_name",
+                    "email",
+                )
+            },
+        ),
         (
             _("Permissions"),
             {
@@ -33,16 +46,19 @@ class UserAdmin(modelUserAdmin):
         ),
     )
 
+
 @admin.register(models.ShoppingCar)
 class ShoppingCarAdmin(BaseModelAdmin):
-    list_display = ('user', 'created_at')
-    
+    list_display = ("user", "created_at")
+
+
 @admin.register(models.ShoppingCarItem)
 class ShoppingCarItemAdmin(BaseModelAdmin):
-    list_display = ['product' , 'shopping_car']
-    readonly_fields = BaseModelAdmin.readonly_fields + ['total']
-    
+    list_display = ["product", "shopping_car"]
+    readonly_fields = BaseModelAdmin.readonly_fields + ["total"]
+
+
 @admin.register(models.Purchased)
 class PurchasedAdmin(BaseModelAdmin):
-    list_display = ['user' , 'product' , 'status']
-    readonly_fields = BaseModelAdmin.readonly_fields + ['total']
+    list_display = ["user", "product", "status"]
+    readonly_fields = BaseModelAdmin.readonly_fields + ["total"]
