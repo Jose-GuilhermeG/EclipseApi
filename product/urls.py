@@ -26,12 +26,6 @@ router.register(
 urlpatterns=router.urls
 
 urlpatterns += [
-
-    path(
-        'product/feature/',
-        views.ProductFeatureView.as_view(),
-        name='product_feature'
-    ),
     re_path(
         r'^product/search/(?P<query>[- \w]+)/$',
         views.ProductSearchView.as_view(),

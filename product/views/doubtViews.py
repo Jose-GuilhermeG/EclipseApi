@@ -15,7 +15,7 @@ from product import serializers
 from product.filters import DoubtFilter
 
 #permissions
-from product.permissions import IsObjOwner
+from product.permissions import IsProductOwner
 
 #schema
 schema_name = "doubts"
@@ -59,5 +59,5 @@ class ProductDoubtUpdateDeleteView(
     generics.RetrieveUpdateDestroyAPIView
 ):
     serializer_class = serializers.ProductDoubEditSerializer
-    permission_classes = [IsObjOwner]
+    permission_classes = [IsProductOwner]
     lookup_field = 'id'

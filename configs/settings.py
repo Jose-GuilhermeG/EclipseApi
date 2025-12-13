@@ -20,6 +20,7 @@ TRIDY_APPS = [
     'drf_spectacular_sidecar',
     'corsheaders',
     'oauth2_provider',
+    'rest_framework.authtoken',
 ]
 PROJECT_APPS = [
     'users',
@@ -34,6 +35,7 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 ]
 INSTALLED_APPS = DJANGO_APPS + TRIDY_APPS + PROJECT_APPS
 MIDDLEWARE = [
@@ -143,7 +145,6 @@ SIMPLE_JWT = {
 }
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
@@ -186,3 +187,6 @@ MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = reverse_lazy("auth:token_obtain_pair")
+
+SITE_ID = 1
+GOOGLE_REDIRECT_URL = 'http://127.0.0.1:8000/auth/oauth/google/'

@@ -7,6 +7,7 @@ from django.core.validators import MinValueValidator , MaxValueValidator
 from django.conf import settings
 from django.db.models import Avg
 from .objects import ProductManager , CategoryManager
+from workplace.models import Shop
 
 USER = settings.AUTH_USER_MODEL
 
@@ -55,6 +56,22 @@ class Product(BaseModel):
         verbose_name=_("Categorias do produto"),
         to='product.Category',
         related_name='product',
+    )
+    
+    views = models.IntegerField(
+        verbose_name=_("Visualizações do produto"),
+        default=0,
+        null=True,
+        blank=True
+    )
+    
+    shop = models.ForeignKey(
+        to=Shop, 
+        verbose_name=_("Loja"), 
+        on_delete=models.CASCADE,
+        related_name="products",
+        null=True,
+        blank=True
     )
     
     objects = ProductManager()

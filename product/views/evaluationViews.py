@@ -17,7 +17,7 @@ from product import serializers
 from product.filters import EvaluationFilter
 
 #permissions
-from product.permissions import IsObjOwner , IsObjUser
+from product.permissions import IsObjUser
 
 #schema
 schema = create_viewset_schema("evaluations")

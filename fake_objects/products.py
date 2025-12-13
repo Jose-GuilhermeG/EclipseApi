@@ -24,13 +24,15 @@ if __name__ == '__main__':
     from faker import Faker 
     from faker_commerce import Provider 
     from product.models import Product , Category , Doubt , Evaluation 
+    from workplace.models import Shop
     from django.contrib.auth import get_user_model 
     
-    USER = get_user_model() 
+    USER = get_user_model()
     
     fake = Faker("pt_BR") 
     fake.add_provider(Provider) 
-    defualt_user = USER.objects.get(pk = 1) 
+    default_user = USER.objects.get(pk = 1) 
+    default_shop = default_user.shop
     models = [Product , Category , Doubt , Evaluation ] 
     django_categories = [] 
     if DELETE: 
@@ -50,7 +52,8 @@ if __name__ == '__main__':
                         name = fake.ecommerce_name(), 
                         description = fake.text(max_nb_chars=100), 
                         price = fake.pydecimal( left_digits=4, right_digits=2, positive=True ), 
-                        created_by = defualt_user ,
+                        shop = default_shop,
+                        created_by = default_user ,
                     ) 
         category = choice(django_categories) 
         product.categorys.set([category]) 
@@ -63,7 +66,7 @@ if __name__ == '__main__':
         for _ in range(EVALUATION_NUMBER_PER_PRODUCT):
             evaluation = Evaluation(
                 product = product,
-                user = defualt_user,
+                user = default_user,
                 rating = fake.random_int(min=1 , max=5),
                 comment = fake.text(max_nb_chars=200)
             )
@@ -76,7 +79,7 @@ if __name__ == '__main__':
         for _ in range(DOUBT_NUMBER_PER_PRODUCT):
             doubt = Doubt(
                 product = product,
-                user = defualt_user,
+                user = default_user,
                 title = fake.text(max_nb_chars=100),
                 content = fake.text(max_nb_chars=200)
             )

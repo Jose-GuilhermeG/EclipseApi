@@ -1,6 +1,6 @@
 from rest_framework.permissions import BasePermission
 
-class IsObjOwner(BasePermission):
+class IsProductOwner(BasePermission):
     """
     Permission class to check if the user is the owner of the product.
     """
@@ -9,7 +9,7 @@ class IsObjOwner(BasePermission):
         return request.user
 
     def has_object_permission(self, request, view, obj):
-        return obj.created_by.id == request.user.id
+        return obj.shop.id == request.user.shop.id
     
 class IsObjUser:
     """

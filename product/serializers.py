@@ -17,6 +17,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
     rating = serializers.FloatField(source='get_rating')
     evaluations = serializers.IntegerField(source='get_evaluations_number')
     rating_count = serializers.SerializerMethodField()
+    shop = serializers.CharField()
     
     class Meta:
         model = Product

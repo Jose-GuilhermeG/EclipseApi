@@ -11,6 +11,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include(("product.urls","product") , namespace='product')),
     path('auth/', include(("users.urls","users") , namespace='auth')),
+    path('workplace/', include(("workplace.urls","workplace") , namespace='workplace')),
 ]
 
 #docs
@@ -28,7 +29,7 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    path('auth/oauth/', include(oauth_urls,namespace="oauth2_provider"))
+    path('auth//', include(oauth_urls,namespace="oauth2_provider"))
 ]
 
 if settings.DEBUG:
