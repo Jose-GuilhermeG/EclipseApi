@@ -22,6 +22,7 @@ uma simples api para um loja virtual Contendo:
     - User
     - Purchased
     - e modelos intermediarios e secundarios
+- Micro serviço de envio de email
 
 ## Tecnologias
 | Tecnologia | Uso |
@@ -29,10 +30,12 @@ uma simples api para um loja virtual Contendo:
 | Python | Backend principal |
 | Django/DRF | Framework da API|
 | Redis | Cache|
-| MySQL | Banco de dados|
+| MySQL | Banco de dados |
 | Nginx | Servidor de arquivos estaticos |
 | Docker | Deploy e ambiente isolado|
 | Git/GitHub | Versionamento e colaboração|
+| kafka | sistema de comunicação de serviços |
+| kafka-ui | gerenciamento e monitoramento do kafka |
 
 ## Como usar:
 ### Clonar o repositório

@@ -1,0 +1,10 @@
+FROM python
+
+WORKDIR /src/messageService
+
+RUN  apt-get update && apt-get upgrade -y
+RUN pip install --upgrade pip
+
+COPY ./requeriments/messageServiceRequirements.txt ./requeriments.txt
+
+RUN pip install -r requeriments.txt
