@@ -1,3 +1,3 @@
-from controllers.deliverd import kafakaConsumer, send_delived_email_message, TOPIC
+from controllers.deliverd import consumer, send_delived_email_message, TOPIC
 
-kafakaConsumer.listen(TOPIC, send_delived_email_message)
+consumer.listen(TOPIC, send_delived_email_message)

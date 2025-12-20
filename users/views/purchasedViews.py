@@ -9,6 +9,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from django.utils.translation import gettext_lazy as _
 from core.utils import create_viewset_schema
+from core.producer import KafkaMessageProducer, messageProducer
 
 # serializes
 from users import serializers
@@ -22,7 +23,12 @@ from rest_framework.permissions import IsAuthenticated
 from users.models import Purchased
 from users.enuns import PURCHASEDSTATUS
 
+# topics
+CONFIRM_DELIVERED_TOPIC = "confirm_delivered_message"
+
 USER = get_user_model()
+kafkaProducer = KafkaMessageProducer()
+producer = messageProducer(kafkaProducer)
 
 
 # views
@@ -54,7 +60,8 @@ class UserPurchasedViewset(
 @api_view(["post"])
 @permission_classes([IsAuthenticated])
 def confirm_delivered(request, id):
-    purchased_obj = get_object_or_404(Purchased, user=request.user, id=id)
+    user = request.user
+    purchased_obj = get_object_or_404(Purchased, user=user, id=id)
     delivered_status = PURCHASEDSTATUS.DELIVERED
 
     if purchased_obj.status == delivered_status:
@@ -64,4 +71,15 @@ def confirm_delivered(request, id):
 
     purchased_obj.status = delivered_status
     purchased_obj.save()
+    producer.sender(
+        to=CONFIRM_DELIVERED_TOPIC,
+        value={
+            "data": {
+                "user": user.username,
+                "email": user.email,
+                "product": purchased_obj.product.name,
+                "link": "None",
+            }
+        },
+    )
     return Response({"confirm_delivered": True}, status=status.HTTP_200_OK)

@@ -1,8 +1,9 @@
 from messages import TemplateEmail
-from settings import EMAIL_PORT, EMAIL_PASSWORD, SMTP_SERVER
-from consumer.kafkaConsumer import KafkaConsumer, json_deserializer
+from settings import EMAIL_PORT, EMAIL_PASSWORD, SMTP_SERVER, KAFKA_SERVER
+from consumer.kafkaConsumer import kafkaMessageConsumer, json_deserializer
+from consumer.cosumer import MessageConsumer
 
-TOPIC = "delivered_message"
+TOPIC = "confirm_delivered_message"
 
 email = TemplateEmail(
     smtp_server=SMTP_SERVER,
@@ -12,19 +13,20 @@ email = TemplateEmail(
 )
 
 
-class kafkaEmailConsumer(KafkaConsumer):
+class kafkaEmailConsumer(kafkaMessageConsumer):
     pass
 
 
-kafakaConsumer = kafkaEmailConsumer("localhost:9092", json_deserializer)
+kafakaConsumer = kafkaMessageConsumer(KAFKA_SERVER, json_deserializer)
+consumer = MessageConsumer(kafakaConsumer)
 
 
 def send_delived_email_message(consumer):
     for msg in consumer:
         try:
-            print("entrega de pedido confirmada")
             body_context = msg.value.get("data")
             user_email = body_context.pop("email")
             email.send_message(user_email, "entrega de pedido confirmada", body_context)
+            print("entrega de pedido confirmada")
         except Exception as e:
             print(f"Error sending delivered email: {e}")

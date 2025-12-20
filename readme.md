@@ -89,11 +89,6 @@ python manage.py runserver
 docker-compose up --build
 ```
 
-### Documentação
-```bash
-http://localhost:8000/docs/
-```
-
 ### Testes
 ```bash
 python manage.py test
@@ -119,3 +114,11 @@ e <b>Users</b> ainda não foi implementado
 
 ## Como Contribuir:
 Ha um arquivo apenas para ajudar nisso: [Contribuir](./CONTRIBUTING.md)
+
+## Documentação
+### Endpoints:
+```bash
+http://localhost:8000/docs/
+```
+
+\ [services](./docs/services.md) : documentação dos services

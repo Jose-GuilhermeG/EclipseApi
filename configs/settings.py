@@ -182,3 +182,5 @@ LOGIN_URL = reverse_lazy("auth:token_obtain_pair")
 
 SITE_ID = 1
 GOOGLE_REDIRECT_URL = "http://127.0.0.1:8000/auth/oauth/google/"
+
+KAFKA_SERVER = env("KAFKA_SERVER").split(" ")

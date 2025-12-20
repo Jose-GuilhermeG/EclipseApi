@@ -1,4 +1,5 @@
 from drf_spectacular.utils import extend_schema, extend_schema_view
+from json import dumps
 
 
 def create_view_schema(schemaName: str, methods: list):
@@ -20,3 +21,7 @@ def create_viewset_schema(schemaName):
     )
 
     return schema
+
+
+def json_serializer(data):
+    return dumps(data).encode("utf-8")

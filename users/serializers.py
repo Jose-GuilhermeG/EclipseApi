@@ -109,7 +109,7 @@ class ShoppingCarItemSerializer(serializers.ModelSerializer):
 
 class PurchasedListSerializer(serializers.ModelSerializer):
     purchased_url = serializers.HyperlinkedIdentityField(
-        view_name="auth:user-purchased-detail", lookup_field="id"
+        view_name="auth:user-purchased-detail", lookup_field="pk"
     )
     product = ProductListSerializer()
     status = serializers.CharField(source="get_status_display")
