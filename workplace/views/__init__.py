@@ -1,1 +1,1 @@
-from workplace.views.shopViews import ShopViewSet
+from workplace.views.shopViews import ShopViewSet , ShopProducts

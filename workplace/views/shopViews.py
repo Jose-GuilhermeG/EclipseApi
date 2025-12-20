@@ -6,14 +6,18 @@ from core.mixins import (
     ViewSetGetSerializerClassMixin,
     SetCache,
 )
+from django.shortcuts import get_object_or_404
+from rest_framework import generics
 
 # models
 from workplace.models import Shop
 
 # serializes
 from workplace.serializers import ShopListSerializer, ShopDetailSerializer
+from product.serializers import ProductListSerializer
 
 # filters
+from product.filters import ProductFilter
 
 # permissions
 from workplace.permissions import IsShopOwner
@@ -43,3 +47,14 @@ class ShopViewSet(
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
+class ShopProducts(generics.ListAPIView):
+    serializer_class = ProductListSerializer
+    filterset_class = ProductFilter
+    lookup_url_kwarg = "slug"
+    kwargs = ["slug"]
+
+    def get_queryset(self):
+        shop = get_object_or_404(Shop, slug=self.kwargs.get("slug"))
+        return shop.products.all()
